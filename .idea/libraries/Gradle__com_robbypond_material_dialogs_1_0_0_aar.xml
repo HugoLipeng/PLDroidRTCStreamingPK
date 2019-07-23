@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.robbypond:material-dialogs:1.0.0@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/86844d749d47a6673c5ca07953b51268/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/86844d749d47a6673c5ca07953b51268/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/86844d749d47a6673c5ca07953b51268/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.robbypond/material-dialogs/1.0.0/c5c8170724cc184a25cea523e38c85372c09164e/material-dialogs-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -183,9 +183,9 @@ public class PKAnchorActivity extends AppCompatActivity {
         mStreamingProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM2)
                 .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM1)
                 .setEncoderRCMode(StreamingProfile.EncoderRCModes.QUALITY_PRIORITY)
-                .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.LAND)
+                .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT)
 //                .setPreferredVideoEncodingSize(options.getVideoEncodingHeight(),options.getVideoEncodingWidth() * 2);  320*480
-                .setPreferredVideoEncodingSize(960,640);
+                .setPreferredVideoEncodingSize(480,848); // 16:9    960
         WatermarkSetting watermarksetting = null;
         if (isWaterMarkEnabled) {
             watermarksetting = new WatermarkSetting(this);
@@ -236,17 +236,24 @@ public class PKAnchorActivity extends AppCompatActivity {
     }
 
     public void onClickSwitchCamera(View v) {
-        mCurrentCamFacingIndex = (mCurrentCamFacingIndex + 1) % CameraStreamingSetting.getNumberOfCameras();
-        CameraStreamingSetting.CAMERA_FACING_ID facingId;
-        if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK.ordinal()) {
-            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK;
-        } else if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT.ordinal()) {
-            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT;
-        } else {
-            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD;
-        }
-        Log.i(TAG, "switchCamera:" + facingId);
-        mRTCStreamingManager.switchCamera(facingId);
+        mRTCStreamingManager.stopStreaming();
+        mStreamingProfile.setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.LAND);
+        mStreamingProfile.setPreferredVideoEncodingSize(
+                960,
+                640);
+        mRTCStreamingManager.setStreamingProfile(mStreamingProfile);
+        mRTCStreamingManager.startStreaming();
+//        mCurrentCamFacingIndex = (mCurrentCamFacingIndex + 1) % CameraStreamingSetting.getNumberOfCameras();
+//        CameraStreamingSetting.CAMERA_FACING_ID facingId;
+//        if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK.ordinal()) {
+//            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK;
+//        } else if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT.ordinal()) {
+//            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT;
+//        } else {
+//            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD;
+//        }
+//        Log.i(TAG, "switchCamera:" + facingId);
+//        mRTCStreamingManager.switchCamera(facingId);
     }
 
     public void onClickExit(View v) {
@@ -341,7 +348,7 @@ public class PKAnchorActivity extends AppCompatActivity {
     }
 
     private boolean startPublishStreamingInternal() {
-        String publishAddr = "rtmp://pili-publish.lipengv2.qiniuts.com/lipengv2/delaytest?key=2dae2f1be51ad020";//QiniuAppServer.getInstance().requestPublishAddress(mRoomName);
+        String publishAddr = "rtmp://pili-publish.lipengv2.qiniuts.com/lipengv2/hugoforme?e=1563866855&token=lmjNIrBihp7Q6oX3-TVGjjlL-asLXDoRYh-BSfQy:aN_tPka0zPa9_ULVKKi64eGcdg4=";//QiniuAppServer.getInstance().requestPublishAddress(mRoomName);
         if (publishAddr == null) {
             dismissProgressDialog();
             showToast("无法获取房间信息/推流地址 !", Toast.LENGTH_SHORT);
@@ -481,7 +488,7 @@ public class PKAnchorActivity extends AppCompatActivity {
         @Override
         public Camera.Size onPreviewSizeSelected(List<Camera.Size> list) {
             for (Camera.Size size : list) {
-                if (size.height >= 480) {
+                if (size.height >= 720) {
                     return size;
                 }
             }
